@@ -1,0 +1,7 @@
+{
+  "id": 1,
+  "name": "boots",
+  "description": "this is boots",
+  "price": 3000.0,
+  "imageUrl": "assets/boots.png"
+}
