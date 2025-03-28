@@ -77,7 +77,7 @@ void main() {
         ).thenAnswer((_) async => tProductModel);
         await repository.getProduct(tId);
         verify(mockRemoteDataSource.getProduct(tId));
-        verify(mockLocalDataSource.cacheProduct(tProduct));
+        verify(mockLocalDataSource.cacheProduct(tProductModel));
       });
 
       test('should return server failure when unsuccessful', () async {
