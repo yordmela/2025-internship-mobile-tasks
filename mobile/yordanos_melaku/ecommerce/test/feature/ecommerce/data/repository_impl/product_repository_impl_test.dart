@@ -3,14 +3,13 @@ import 'package:ecommerce/core/error/exception.dart';
 import 'package:ecommerce/core/error/failure.dart';
 import 'package:ecommerce/feature/product/data/models/product_model.dart';
 import 'package:ecommerce/feature/product/data/repositories/product_repository_impl.dart';
-import 'package:ecommerce/feature/product/domain/entities/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import '../../../../helper/mocks.mocks.dart';
 
 void main() {
   // Common test data
-  const tId = 1;
+  const tId ='1';
   final tProductModel = ProductModel(
     id: tId,
     name: 'boots',
@@ -18,7 +17,6 @@ void main() {
     price: 3000.0,
     imageUrl: 'assets/boots.png',
   );
-  final Product tProduct = tProductModel;
 
   // Mocks
   late ProductRepositoryImpl repository;
@@ -68,7 +66,7 @@ void main() {
         ).thenAnswer((_) async => tProductModel);
         final result = await repository.getProduct(tId);
         verify(mockRemoteDataSource.getProduct(tId));
-        expect(result, equals(Right(tProduct)));
+        expect(result, equals(Right(tProductModel)));
       });
 
       test('should cache the data locally when successful', () async {
@@ -99,7 +97,7 @@ void main() {
         final result = await repository.getProduct(tId);
         verifyZeroInteractions(mockRemoteDataSource);
         verify(mockLocalDataSource.getCachedProduct());
-        expect(result, Right(tProduct));
+        expect(result, Right(tProductModel));
       });
 
       test('should return cache failure when no cached data', () async {
@@ -118,9 +116,9 @@ void main() {
     test('should check if the device is online', () async {
       setupOnline();
       when(
-        mockRemoteDataSource.insertProduct(tProduct),
+        mockRemoteDataSource.insertProduct(tProductModel),
       ).thenAnswer((_) async => tProductModel);
-      await repository.insertProduct(tProduct);
+      await repository.insertProduct(tProductModel);
       verify(mockNetworkInfo.isConnected);
     });
 
@@ -129,19 +127,19 @@ void main() {
 
       test("should add product to remote datasource", () async {
         when(
-          mockRemoteDataSource.insertProduct(tProduct),
+          mockRemoteDataSource.insertProduct(tProductModel),
         ).thenAnswer((_) async => tProductModel);
-        final result = await repository.insertProduct(tProduct);
-        verify(mockRemoteDataSource.insertProduct(tProduct));
+        final result = await repository.insertProduct(tProductModel);
+        verify(mockRemoteDataSource.insertProduct(tProductModel));
         expect(result, Right(tProductModel));
       });
 
       test('should return server failure when unsuccessful', () async {
         when(
-          mockRemoteDataSource.insertProduct(tProduct),
+          mockRemoteDataSource.insertProduct(tProductModel),
         ).thenThrow(ServerException());
-        final result = await repository.insertProduct(tProduct);
-        verify(mockRemoteDataSource.insertProduct(tProduct));
+        final result = await repository.insertProduct(tProductModel);
+        verify(mockRemoteDataSource.insertProduct(tProductModel));
         expect(result, Left(ServerFailure()));
       });
     });
@@ -151,9 +149,9 @@ void main() {
 
       test("should return network exception", () async {
         when(
-          mockRemoteDataSource.insertProduct(tProduct),
+          mockRemoteDataSource.insertProduct(tProductModel),
         ).thenThrow(NetworkException());
-        final result = await repository.insertProduct(tProduct);
+        final result = await repository.insertProduct(tProductModel);
         verify(mockNetworkInfo.isConnected);
         expect(result, Left(NetworkFailure()));
       });
@@ -164,9 +162,9 @@ void main() {
     test('should check if the device is online', () async {
       setupOnline();
       when(
-        mockRemoteDataSource.updateProduct(tId, tProduct),
+        mockRemoteDataSource.updateProduct(tId, tProductModel),
       ).thenAnswer((_) async => tProductModel);
-      await repository.updateProduct(tId, tProduct);
+      await repository.updateProduct(tId, tProductModel);
       verify(mockNetworkInfo.isConnected);
     });
 
@@ -175,19 +173,19 @@ void main() {
 
       test("should update the product", () async {
         when(
-          mockRemoteDataSource.updateProduct(tId, tProduct),
+          mockRemoteDataSource.updateProduct(tId, tProductModel),
         ).thenAnswer((_) async => tProductModel);
-        final result = await repository.updateProduct(tId, tProduct);
-        verify(mockRemoteDataSource.updateProduct(tId, tProduct));
+        final result = await repository.updateProduct(tId, tProductModel);
+        verify(mockRemoteDataSource.updateProduct(tId, tProductModel));
         expect(result, Right(tProductModel));
       });
 
       test('should return server failure when unsuccessful', () async {
         when(
-          mockRemoteDataSource.updateProduct(tId, tProduct),
+          mockRemoteDataSource.updateProduct(tId, tProductModel),
         ).thenThrow(ServerException());
-        final result = await repository.updateProduct(tId, tProduct);
-        verify(mockRemoteDataSource.updateProduct(tId, tProduct));
+        final result = await repository.updateProduct(tId, tProductModel);
+        verify(mockRemoteDataSource.updateProduct(tId, tProductModel));
         expect(result, Left(ServerFailure()));
       });
     });
@@ -197,9 +195,9 @@ void main() {
 
       test("should return network exception", () async {
         when(
-          mockRemoteDataSource.updateProduct(tId, tProduct),
+          mockRemoteDataSource.updateProduct(tId, tProductModel),
         ).thenThrow(NetworkException());
-        final result = await repository.updateProduct(tId, tProduct);
+        final result = await repository.updateProduct(tId, tProductModel);
         verify(mockNetworkInfo.isConnected);
         expect(result, Left(NetworkFailure()));
       });

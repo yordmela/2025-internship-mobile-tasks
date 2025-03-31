@@ -5,6 +5,15 @@ import 'package:ecommerce/feature/product/data/repositories/product_repository_i
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-@GenerateMocks([InternetConnectionChecker, NetworkInfo,ProductRemoteDataSource, ProductLocalDataSource, ProductRepositoryImpl,SharedPreferences])
-void main(){}
+@GenerateMocks([
+  InternetConnectionChecker,
+  NetworkInfo,
+  ProductRemoteDataSource,
+  ProductLocalDataSource,
+  ProductRepositoryImpl,
+  SharedPreferences,
+  http.Client,
+])
+void main() {}

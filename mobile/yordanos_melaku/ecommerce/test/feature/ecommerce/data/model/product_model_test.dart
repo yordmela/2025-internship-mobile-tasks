@@ -8,7 +8,7 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final tProductModel = ProductModel(
-    id: 1,
+    id: '1',
     name: 'boots',
     description: 'this is boots',
     price: 3000.0,

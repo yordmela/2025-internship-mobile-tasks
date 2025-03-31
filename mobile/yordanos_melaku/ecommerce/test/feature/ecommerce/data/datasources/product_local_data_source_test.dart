@@ -56,7 +56,7 @@ void main() {
 
   group('cacheProduct', () {
     final tProductModel = ProductModel(
-      id: 1,
+      id: '1',
       name: 'boots',
       description: 'this is boots',
       price: 3000.0,
