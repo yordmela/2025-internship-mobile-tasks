@@ -9,7 +9,7 @@ abstract class ProductRemoteDataSource {
   Future<ProductModel> getProduct(String id);
   Future<List<ProductModel>> getAllProduct();
   Future<ProductModel> insertProduct(Product product);
-  Future<ProductModel> updateProduct(String id, Product product);
+  Future<ProductModel> updateProduct(Product product);
   Future<void> deleteProduct(String id);
 }
 
@@ -64,10 +64,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<ProductModel> updateProduct(String id, Product product) async {
+  Future<ProductModel> updateProduct(Product product) async {
     final productModel= ProductModel(id: product.id, name: product.name, description: product.description, price: product.price, imageUrl: product.imageUrl);
     final response = await client.put(
-      Uri.parse('http://localhost:5000/api/products/$id'),
+      Uri.parse('http://localhost:5000/api/products/${product.id}'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(productModel.toJson()),
     );

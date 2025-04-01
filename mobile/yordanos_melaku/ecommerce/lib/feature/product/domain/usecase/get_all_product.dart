@@ -4,15 +4,14 @@ import 'package:ecommerce/core/usecase.dart';
 import 'package:ecommerce/feature/product/domain/entities/product.dart';
 import 'package:ecommerce/feature/product/domain/repositories/product_repository.dart';
 
-class InsertProduct extends Usecase<Product,Product>{
+class GetAllProduct extends Usecase<List<Product>,NoParams>{
   final ProductRepository repository;
 
-  InsertProduct({required this.repository});
+  GetAllProduct(this.repository);
 
   @override
-  Future<Either<Failure, Product>> call(Product product) async {
-    return await repository.insertProduct(product);
+  Future<Either<Failure, List<Product>>> call(NoParams) async {
+    return await repository.getAllProducts();
   }
-
 }
 

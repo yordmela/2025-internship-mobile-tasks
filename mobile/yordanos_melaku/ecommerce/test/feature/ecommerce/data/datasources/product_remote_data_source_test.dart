@@ -170,7 +170,7 @@ void main() {
       setUpMockHttpClientSuccess200();
 
       //act
-      await productRemoteDataSource.updateProduct(tId, tProductModel);
+      await productRemoteDataSource.updateProduct(tProductModel);
 
       //assert
       verify(
@@ -188,7 +188,6 @@ void main() {
 
       //act
       final response = await productRemoteDataSource.updateProduct(
-        tId,
         tProductModel,
       );
 
@@ -205,7 +204,7 @@ void main() {
 
       // assert
       expect(
-        () => (response(tId, tProductModel)),
+        () => (response(tProductModel)),
         throwsA(TypeMatcher<ServerException>()),
       );
     });

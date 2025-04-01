@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class ProductLocalDataSource {
   Future<Product> getCachedProduct();
   Future<void> cacheProduct(ProductModel product);
+  Future<List<ProductModel>> getCachedProducts();
+  Future<void> cacheListOfProducts(List<ProductModel> products);
 }
 
 class ProductLocalDataSourceImpl implements ProductLocalDataSource {
@@ -28,8 +30,29 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   }
 
   @override
+  Future<List<ProductModel>> getCachedProducts() async {
+    final jsonString = sharedPreferences.getString('CACHED_PRODUCT_LIST');
+    if (jsonString != null) {
+      final List<dynamic> jsonList = json.decode(jsonString);
+      return Future.value(
+        jsonList.map((json) => ProductModel.fromJson(json)).toList(),
+      );
+    } else {
+      throw CacheException();
+    }
+  }
+
+  @override
   Future<void> cacheProduct(ProductModel product) async {
     final jsonString = json.encode(product.toJson());
     await sharedPreferences.setString(CACHED_PRODUCT, jsonString);
+  }
+
+  @override
+  Future<void> cacheListOfProducts(List<ProductModel> products) async {
+    final jsonString = json.encode(
+      products.map((product) => product.toJson()).toList(),
+    );
+    await sharedPreferences.setString('CACHED_PRODUCT_LIST', jsonString);
   }
 }

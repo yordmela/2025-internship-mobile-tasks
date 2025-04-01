@@ -9,7 +9,7 @@ import '../../../../helper/mocks.mocks.dart';
 
 void main() {
   // Common test data
-  const tId ='1';
+  const tId = '1';
   final tProductModel = ProductModel(
     id: tId,
     name: 'boots',
@@ -162,9 +162,9 @@ void main() {
     test('should check if the device is online', () async {
       setupOnline();
       when(
-        mockRemoteDataSource.updateProduct(tId, tProductModel),
+        mockRemoteDataSource.updateProduct(tProductModel),
       ).thenAnswer((_) async => tProductModel);
-      await repository.updateProduct(tId, tProductModel);
+      await repository.updateProduct(tProductModel);
       verify(mockNetworkInfo.isConnected);
     });
 
@@ -173,19 +173,19 @@ void main() {
 
       test("should update the product", () async {
         when(
-          mockRemoteDataSource.updateProduct(tId, tProductModel),
+          mockRemoteDataSource.updateProduct(tProductModel),
         ).thenAnswer((_) async => tProductModel);
-        final result = await repository.updateProduct(tId, tProductModel);
-        verify(mockRemoteDataSource.updateProduct(tId, tProductModel));
+        final result = await repository.updateProduct(tProductModel);
+        verify(mockRemoteDataSource.updateProduct(tProductModel));
         expect(result, Right(tProductModel));
       });
 
       test('should return server failure when unsuccessful', () async {
         when(
-          mockRemoteDataSource.updateProduct(tId, tProductModel),
+          mockRemoteDataSource.updateProduct(tProductModel),
         ).thenThrow(ServerException());
-        final result = await repository.updateProduct(tId, tProductModel);
-        verify(mockRemoteDataSource.updateProduct(tId, tProductModel));
+        final result = await repository.updateProduct(tProductModel);
+        verify(mockRemoteDataSource.updateProduct(tProductModel));
         expect(result, Left(ServerFailure()));
       });
     });
@@ -195,9 +195,9 @@ void main() {
 
       test("should return network exception", () async {
         when(
-          mockRemoteDataSource.updateProduct(tId, tProductModel),
+          mockRemoteDataSource.updateProduct(tProductModel),
         ).thenThrow(NetworkException());
-        final result = await repository.updateProduct(tId, tProductModel);
+        final result = await repository.updateProduct(tProductModel);
         verify(mockNetworkInfo.isConnected);
         expect(result, Left(NetworkFailure()));
       });

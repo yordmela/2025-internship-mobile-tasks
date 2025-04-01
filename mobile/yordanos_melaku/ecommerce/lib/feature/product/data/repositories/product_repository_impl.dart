@@ -38,6 +38,26 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
+  Future<Either<Failure, List<Product>>> getAllProducts() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteProduct = await remoteDataSource.getAllProduct();
+        localDataSource.cacheListOfProducts(remoteProduct);
+        return Right(remoteProduct);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localProduct = await localDataSource.getCachedProducts();
+        return Right(localProduct);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
+  }
+
+  @override
   Future<Either<Failure, Product>> insertProduct(Product product) async {
     if (await networkInfo.isConnected) {
       try {
@@ -53,13 +73,11 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<Either<Failure, Product>> updateProduct(
-    String id,
     Product product,
   ) async {
     if (await networkInfo.isConnected) {
       try {
         final updatedProduct = await remoteDataSource.updateProduct(
-          id,
           product,
         );
         return Right(updatedProduct);
