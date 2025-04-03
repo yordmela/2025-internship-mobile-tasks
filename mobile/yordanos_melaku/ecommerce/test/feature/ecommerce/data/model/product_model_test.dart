@@ -11,7 +11,7 @@ void main() {
     id: '1',
     name: 'boots',
     description: 'this is boots',
-    price: 3000.0,
+    price: "3000.0",
     imageUrl: 'assets/boots.png',
   );
   test('should be subclass of product entitiy', () async {
@@ -38,10 +38,10 @@ void main() {
 
       // act
       final expectedJsonMap = {
-        "id": 1,
+        "id": '1',
         "name": "boots",
         "description": "this is boots",
-        "price": 3000.0,
+        "price": "3000.0",
         "imageUrl": "assets/boots.png",
       };
 

@@ -14,7 +14,7 @@ void main() {
     id: tId,
     name: 'boots',
     description: 'this is boots',
-    price: 3000.0,
+    price: "3000.0",
     imageUrl: 'assets/boots.png',
   );
 

@@ -35,7 +35,7 @@ void main() {
   Product product = const Product(
     id: '1',
     name: 'jeans',
-    price: 100,
+    price: "100",
     description: 'this is jeans',
     imageUrl: '../assets/bag.jpg',
   );
@@ -51,14 +51,14 @@ void main() {
       const Product(
         id: '1',
         name: 'jeans',
-        price: 100,
+        price: "100",
         description: 'this is jeans',
         imageUrl: '../assets/bag.jpg',
       ),
       const Product(
         id: '1',
         name: 'jeans',
-        price: 100,
+        price: "100",
         description: 'this is jeans',
         imageUrl: '../assets/bag.jpg',
       ),

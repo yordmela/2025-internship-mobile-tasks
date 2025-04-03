@@ -7,7 +7,7 @@ import 'package:ecommerce/feature/product/domain/repositories/product_repository
 class UpdateProduct extends Usecase<Product, Product> {
   final ProductRepository repository;
 
-  UpdateProduct({required this.repository});
+  UpdateProduct(this.repository);
 
   @override
   Future<Either<Failure, Product>> call(Product product) async {

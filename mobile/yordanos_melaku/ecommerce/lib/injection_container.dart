@@ -28,8 +28,8 @@ Future<void> init() async {
   );
   // Use cases
   sl.registerLazySingleton(() => GetAllProduct(sl()));
-  sl.registerLazySingleton(() => InsertProduct(repository: sl()));
-  sl.registerLazySingleton(() => UpdateProduct(repository: sl()));
+  sl.registerLazySingleton(() => InsertProduct(sl()));
+  sl.registerLazySingleton(() => UpdateProduct(sl()));
   sl.registerLazySingleton(() => DeleteProduct(sl()));
 
   // repository

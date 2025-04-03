@@ -38,8 +38,16 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
-      final jsonList = json.decode(response.body);
-      return jsonList.map((json) => ProductModel.fromJson(json)).toList();
+      final List<dynamic> jsonList = json.decode(response.body);
+
+      final result =
+          jsonList
+              .map(
+                (json) => ProductModel.fromJson(json as Map<String, dynamic>),
+              )
+              .toList();
+
+      return result;
     } else {
       throw ServerException();
     }
@@ -47,7 +55,13 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<ProductModel> insertProduct(Product product) async {
-    final productModel= ProductModel(id: product.id, name: product.name, description: product.description, price: product.price, imageUrl: product.imageUrl);
+    final productModel = ProductModel(
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    );
     final response = await client.post(
       Uri.parse(baseUrl),
       headers: {
@@ -65,7 +79,13 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<ProductModel> updateProduct(Product product) async {
-    final productModel= ProductModel(id: product.id, name: product.name, description: product.description, price: product.price, imageUrl: product.imageUrl);
+    final productModel = ProductModel(
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    );
     final response = await client.put(
       Uri.parse('http://localhost:5000/api/products/${product.id}'),
       headers: {'Content-Type': 'application/json'},
@@ -85,8 +105,10 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       Uri.parse('$baseUrl$id'),
       headers: {'Content-Type': 'application/json'},
     );
-    if (response.statusCode == 200) {
-      return;
+    print('remote data sourse delete $response');
+    print(response.statusCode);
+    if (response.statusCode == 200 || response.statusCode == 204) {
+      return null;
     } else {
       throw ServerException();
     }

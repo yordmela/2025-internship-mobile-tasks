@@ -59,7 +59,7 @@ void main() {
       id: '1',
       name: 'boots',
       description: 'this is boots',
-      price: 3000.0,
+      price: "3000.0",
       imageUrl: 'assets/boots.png',
     );
     test('should call shared preferences to cache data', () async {

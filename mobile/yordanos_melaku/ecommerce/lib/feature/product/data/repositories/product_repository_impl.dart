@@ -40,8 +40,11 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, List<Product>>> getAllProducts() async {
     if (await networkInfo.isConnected) {
+      print(await networkInfo.isConnected);
       try {
+        print("in the repository");
         final remoteProduct = await remoteDataSource.getAllProduct();
+        print(remoteProduct);
         localDataSource.cacheListOfProducts(remoteProduct);
         return Right(remoteProduct);
       } on ServerException {

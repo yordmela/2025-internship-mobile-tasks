@@ -22,9 +22,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     // list of event handlers
     on<GetAllProductEvent>((event, emit) async {
       emit(ProductsLoadingState());
-
       final result = await getAllProduct.call(NoParams());
-
       result.fold(
         (failure) => emit(ProductsErrorState('Error loading products')),
         (products) => emit(ProductsLoadedState(products)),
@@ -57,7 +55,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(ProductsLoadingState());
 
       final result = await deleteProduct.call(event.id);
-
+      print(result);
       result.fold(
         (failure) => emit(ProductsErrorState('Error in deleting product')),
         (product) {
